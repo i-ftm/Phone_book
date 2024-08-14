@@ -21,7 +21,7 @@ class Phone_book:
 
     def update_contact(self,name,email,phone):
         my_file =open('contacts.txt','r')
-        file = list(my_file)
+        contacts = list(my_file)
         my_file.close()
         contact = {
             'name':name,
@@ -29,8 +29,8 @@ class Phone_book:
             'phone':phone,
         }
 
-        if contact in file :
-            file.remove(contact)
+        if contact in contacts :
+            contacts.remove(contact)
             update_item=input("Which item do you want to edit? for name write 'n' , for email address write 'e' , for phonenumber write 'p'")
             for i in range(len(update_item)):
                 if update_item[i] == 'n':
@@ -47,16 +47,16 @@ class Phone_book:
                     contact['phone'] = phone
                 else:
                     raise ValueError('does not exist')
-                file.append(contact)
+                contacts.append(contact)
 
-                save_item = input("Would you like to save it? if yes write 'y' and if no write 'n' ")
+                save_item = input("Do you want to save the changes ? if yes write 'y' and if no write 'n' ")
                 if save_item == 'n':
                     pass
                 elif save_item == 'y':
                     os.remove('contacts.txt')
                     new_file=open('contacts.txt','a')  #This file has been updated
-                    for i in range(len(file)):
-                        new_file.write(f'{file[i]}\n')
+                    for i in range(len(contacts)):
+                        new_file.write(f'{contacts[i]}\n')
                     new_file.close()
 
                 else:
@@ -65,7 +65,7 @@ class Phone_book:
 
     def delete_contact(self,name,email,phone):
         my_file = open('contacts.txt', 'r')
-        file = list(my_file)
+        contacts = list(my_file)
         my_file.close()
         contact = {
             'name': name,
@@ -73,17 +73,17 @@ class Phone_book:
             'phone': phone,
         }
 
-        if contact in file:
-            file.remove(contact)
+        if contact in contacts:
+            contacts.remove(contact)
 
-        save_item = input("Would you like to save it? if yes write 'y' and if no write 'n' ")
+        save_item = input("Do you want to save the changes ? if yes write 'y' and if no write 'n' ")
         if save_item == 'n':
             pass
         elif save_item == 'y':
             os.remove('contacts.txt')
             new_file = open('contacts.txt', 'a')  # This file has been updated
-            for i in range(len(file)):
-                new_file.write(f'{file[i]}\n')
+            for i in range(len(contacts)):
+                new_file.write(f'{contacts[i]}\n')
             new_file.close()
 
         else:
@@ -94,7 +94,19 @@ class Phone_book:
         print(file.read())
 
     def sort_contacts(self):
-        pass
+        my_file = open('contacts.txt', 'r')
+        contacts = list(my_file)
+        my_file.close()
+        contacts.sort(key=lambda x: x["name"])
+        save_item = input("Do you want to save the changes ? if yes write 'y' and if no write 'n' ")
+        if save_item == 'n':
+            pass
+        elif save_item == 'y':
+            os.remove('contacts.txt')
+            new_file = open('contacts.txt', 'a')  # This file has been updated
+            for i in range(len(contacts)):
+                new_file.write(f'{contacts[i]}\n')
+            new_file.close()
 
 
 
